@@ -1,5 +1,11 @@
 import os
-os.system("pip install --no-cache-dir scikit-learn")
+import subprocess
+
+# Force install scikit-learn if missing
+try:
+    import sklearn
+except ModuleNotFoundError:
+    subprocess.run(["pip", "install", "--no-cache-dir", "scikit-learn"])
 
 
 import pandas as pd
