@@ -1,6 +1,7 @@
 import os
 os.system("pip install --no-cache-dir scikit-learn")
 
+import packages  # This must come BEFORE sklearn imports
 
 
 
