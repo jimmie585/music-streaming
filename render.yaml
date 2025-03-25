@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: music-streaming-app  # Change this to your app name
+    env: python
+    region: oregon  # Change to "frankfurt" if in Europe
+    plan: free
+    buildCommand: |
+      pip install -r requirements.txt
+    startCommand: streamlit run music_stream_app.py --server.port=10000
+    envVars:
+      - key: PORT
+        value: 10000
