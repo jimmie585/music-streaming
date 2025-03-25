@@ -92,13 +92,19 @@ st.subheader("🔥 Top 10 Most Streamed Songs")
 top_songs = df.nlargest(10, "streams")[["artist(s)_name", "streams"]]
 st.bar_chart(top_songs.set_index("artist(s)_name"))
 
-# Feature Correlation with Streams
+# Feature Correlation with Streams (Fixed)
 st.subheader("📈 Feature Correlation with Streams")
-correlation = df.corr()["streams"].sort_values(ascending=False)
-fig, ax = plt.subplots(figsize=(8, 4))
-sns.barplot(x=correlation.index, y=correlation.values, ax=ax, palette="coolwarm")
-plt.xticks(rotation=90)
-st.pyplot(fig)
+numeric_df = df.select_dtypes(include=[np.number])  # Select only numeric columns
+
+if "streams" in numeric_df.columns:
+    correlation = numeric_df.corr()["streams"].sort_values(ascending=False)
+    
+    fig, ax = plt.subplots(figsize=(8, 4))
+    sns.barplot(x=correlation.index, y=correlation.values, ax=ax, palette="coolwarm")
+    plt.xticks(rotation=90)
+    st.pyplot(fig)
+else:
+    st.warning("⚠️ No numeric features available for correlation.")
 
 # Distribution of Streams
 st.subheader("📊 Distribution of Streams")
@@ -157,17 +163,9 @@ danceability = st.slider("Danceability (%)", 0, 100, 50)
 valence = st.slider("Valence (%)", 0, 100, 50)
 energy = st.slider("Energy (%)", 0, 100, 50)
 acousticness = st.slider("Acousticness (%)", 0, 100, 50)
-instrumentalness = st.slider("Instrumentalness (%)", 0, 100, 50)
-liveness = st.slider("Liveness (%)", 0, 100, 50)
-speechiness = st.slider("Speechiness (%)", 0, 100, 50)
-bpm = st.slider("Beats Per Minute (BPM)", 0, 200, 120)
 
 if st.button("🎶 Predict Streams"):
-    new_data = pd.DataFrame({
-        'danceability_%': [danceability], 'valence_%': [valence], 'energy_%': [energy],
-        'acousticness_%': [acousticness], 'instrumentalness_%': [instrumentalness],
-        'liveness_%': [liveness], 'speechiness_%': [speechiness], 'bpm': [bpm]
-    })
+    new_data = pd.DataFrame({'danceability_%': [danceability], 'valence_%': [valence], 'energy_%': [energy], 'acousticness_%': [acousticness]})
     prediction = model.predict(new_data)
     st.write(f"### 🔥 Predicted Streams: **{int(prediction[0])}**")
 
