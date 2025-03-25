@@ -14,7 +14,7 @@ Welcome to the **Music Streaming Analytics App**! This is a **Streamlit-powered 
 ---
 
 ## **🚀 Live Demo**
-🔗 **[Click here to access the app](https://music-streaming-app.onrender.com)**  
+🔗 **[Click here to access the app]https://music-streaming-gvv7x79fdwcwripng6dgjf.streamlit.app/**  
 
 ---
 
