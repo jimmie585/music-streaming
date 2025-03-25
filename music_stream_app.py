@@ -24,11 +24,9 @@ This dashboard helps **artists, producers, and streaming platforms** analyze son
 """)
 
 # Load dataset from CSV
-@st.cache_data
-def load_data():
-    return pd.read_csv("C:\\Users\\ADMIN\\Downloads\\Spotify Most Streamed Songs.csv")
+DATA_PATH= "https://raw.githubusercontent.com/jimmie585/music-streaming/refs/heads/main/Spotify%20Most%20Streamed%20Songs.csv"
+df=pd.read_csv(DATA_PATH)
 
-df = load_data()
 
 # Ensure "streams" column is numeric
 if "streams" in df.columns:
