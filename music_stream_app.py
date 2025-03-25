@@ -26,6 +26,17 @@ This dashboard helps **artists, producers, and streaming platforms** analyze son
 # Load dataset from CSV
 DATA_PATH= "https://raw.githubusercontent.com/jimmie585/music-streaming/refs/heads/main/Spotify%20Most%20Streamed%20Songs.csv"
 df=pd.read_csv(DATA_PATH)
+import subprocess
+import sys
+
+def install(package):
+    subprocess.check_call([sys.executable, "-m", "pip", "install", package])
+
+try:
+    from sklearn.model_selection import train_test_split
+except ImportError:
+    install("scikit-learn")
+    from sklearn.model_selection import train_test_split
 
 
 # Ensure "streams" column is numeric
