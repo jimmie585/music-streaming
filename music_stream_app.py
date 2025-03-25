@@ -154,7 +154,7 @@ st.write(f"**Mean Absolute Error (MAE):** {mae:.2f}")
 st.write(f"**Mean Squared Error (MSE):** {mse:.2f}")
 st.write(f"**R-squared (R2):** {r2:.2f}")
 
-# ---- 🎯 Make Predictions ----
+# ---- 🎯 Make Predictions (Fixed) ----
 st.subheader("🎯 Predict Streams for a New Song")
 st.write("**Adjust the song features below** and click **Predict Streams** to estimate its popularity.")
 
@@ -165,7 +165,9 @@ energy = st.slider("Energy (%)", 0, 100, 50)
 acousticness = st.slider("Acousticness (%)", 0, 100, 50)
 
 if st.button("🎶 Predict Streams"):
-    new_data = pd.DataFrame({'danceability_%': [danceability], 'valence_%': [valence], 'energy_%': [energy], 'acousticness_%': [acousticness]})
+    new_data = pd.DataFrame(columns=X_train.columns)  # Ensure all required columns exist
+    new_data.loc[0] = [danceability, valence, energy, acousticness] + [0] * (len(X_train.columns) - 4)  # Fill missing features with 0
+    
     prediction = model.predict(new_data)
     st.write(f"### 🔥 Predicted Streams: **{int(prediction[0])}**")
 
